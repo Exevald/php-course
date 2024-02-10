@@ -1,0 +1,48 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.page-header {
+    padding: 20px;
+}
+
+.main-title {
+    font-family: 'Roboto', sans-serif;
+}
+
+.page-title {
+    font-family: 'Roboto', sans-serif;
+    color: #FF603D;
+}
+
+.links-section {
+    padding: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.links-section__title {
+    color: #FF603D;
+}
+
+.links-section__page-link {
+    font-family: 'Roboto', sans-serif;
+    font-size: 20px;
+    text-decoration: none;
+    color: black;
+}
+
+.info_section {
+    padding-left: 20px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    font-family: 'Roboto', sans-serif;
+}
+
+.info_section__interests {
+    padding-left: 20px;
+}
