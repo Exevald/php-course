@@ -1,0 +1,13 @@
+#!/bin/bash
+
+home_dir_info=$(stat ~)
+echo "Home directory info: $home_dir_info"
+
+owner=$(stat -c '%U' ~)
+echo "Owner of the home directory: $owner"
+
+last_modification_date=$(stat -c '%y' /etc/hosts)
+echo "Last modification date of /etc/hosts: $last_modification_date"
+
+last_access_date=$(stat -c '%X' /etc/hosts)
+echo "Last access date of /etc/hosts (Unix Timestamp): $last_access_date"

@@ -1,0 +1,11 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    echo "Invalid arguments count. Usage: task5 <file.txt>"
+    exit 1
+fi
+text_file=$1
+
+split -l 4 -d $text_file output1_ --additional-suffix=.txt
+split -n 3 -d $text_file output2_ --additional-suffix=.txt
+split -n l/3 -d $text_file output3_ --additional-suffix=.txt

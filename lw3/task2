@@ -1,0 +1,13 @@
+#!/bin/bash
+
+echo "Size of all files in the home directory (Human readable):"
+sudo du -sh ~/*
+
+total_size=$(sudo du -sb ~ | cut -f1)
+echo "Total size of all files in the home directory (Bytes): $total_size"
+
+echo "Sorted size of all files in the home directory (Human readable):"
+sudo du -sh ~/* | sort -hr
+
+echo "Size of top 5 largest files in the home directory (Human readable):"
+sudo du -sh ~/* | sort -hr | head -n 5

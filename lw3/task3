@@ -1,0 +1,15 @@
+#!/bin/bash
+
+if [ $# -ne 2 ]; then
+    echo "Invalid arguments count. Usage: task3 <firstFile.txt> <secondFile.txt>"
+    exit 1
+fi
+
+echo "Comparing the contents of $1 and $2:"
+diff $1 $2
+
+echo "Comparing the contents of $1 and $2 in 2 columns:"
+diff -y $1 $2
+
+echo "Comparing the contents of $1 and $2, ignoring case:"
+diff -i $1 $2

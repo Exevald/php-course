@@ -1,0 +1,17 @@
+#!/bin/bash
+
+if [ $# -ne 2 ]; then
+    echo "Invalid arguments count. Usage: task4 <firstFile.txt> <secondFile.txt>"
+    exit 1
+fi
+first_file=$1
+second_file=$2
+
+line_count=$(wc -l < $first_file)
+echo "Number of lines in first file: $line_count"
+
+word_count=$(wc -w < $first_file)
+echo "Number of words in first file: $word_count"
+
+char_count=$(wc -m $first_file $second_file | grep total)
+echo "Total number of characters in poem1.txt and poem2.txt: $char_count"

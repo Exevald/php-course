@@ -1,0 +1,6 @@
+#!/bin/bash
+
+echo "Links test" > testfile.txt
+
+ln testfile.txt hardlink.txt
+ln -s testfile.txt symlink.txt

@@ -1,0 +1,19 @@
+#!/bin/bash
+
+if [ $# -ne 1 ]; then
+    echo "Invalid arguments count. Usage: task6 <file.txt>"
+    exit 1
+fi
+text_file=$1
+
+grep 'you' $text_file
+
+echo ""
+grep 'you' pushkin1.txt pushkin2.txt pushkin3.txt
+
+echo ""
+grep -i 'and' $text_file
+
+echo ""
+echo "Sorted:"
+grep -i 'and' $text_file | sort -r
