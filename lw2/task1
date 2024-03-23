@@ -1,0 +1,9 @@
+#!/bin/bash
+
+cd ~
+mkdir Lab
+cd Lab
+touch file1.txt
+cp file1.txt file2.txt
+mv file2.txt /tmp
+rm file1.txt

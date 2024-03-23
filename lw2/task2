@@ -1,0 +1,19 @@
+#!/bin/bash
+
+echo "Full poem:"
+cat poem1.txt
+echo ""
+
+echo "First 4 lines:"
+head -n 4 poem1.txt
+echo ""
+
+echo "Last 4 lines:"
+tail -n 4 poem1.txt
+echo ""
+
+grep 'cold' poem1.txt
+echo ""
+
+sed -i 's/Natasha/Maria/g' poem1.txt
+echo ""

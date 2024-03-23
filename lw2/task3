@@ -1,0 +1,11 @@
+#!/bin/bash
+
+cat poem2.txt > file3.txt
+
+echo "Temporal text for file4.txt" > file4.txt
+
+rm file4.txt || rm file3.txt
+
+cat file3.txt | grep "text" | wc -l
+
+touch newfile.txt && echo "Новый текст" > newfile.txt && cat newfile.txt
