@@ -1,0 +1,40 @@
+version: '3'
+services:
+  php-app-dev:
+    image: php-app-dev
+    container_name: php-app-dev
+    env_file: .env
+    ports:
+      - '${APP_PORT:-80}:80'
+      - "9001:9003"
+    environment:
+      APP_DEBUG: enabled
+      APP_ENV: dev
+      PHP_IDE_CONFIG: serverName=php-app-dev
+      USER_ID: 1000
+      USER_NAME: ${USER}
+    volumes:
+      - '.:/var/www/php-app'
+    depends_on:
+      - php-service-db
+
+  php-service-db:
+    image: 'mysql/mysql-server:8.0'
+    container_name: php-service-db
+    ports:
+      - '${FORWARD_DB_PORT:-3306}:3306'
+    environment:
+      MYSQL_ROOT_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ROOT_HOST: "%"
+      MYSQL_DATABASE: '${DB_DATABASE}'
+      MYSQL_USER: '${DB_USERNAME}'
+      MYSQL_PASSWORD: '${DB_PASSWORD}'
+      MYSQL_ALLOW_EMPTY_PASSWORD: 1
+    volumes:
+      - 'php-service-db-data:/var/lib/mysql'
+    healthcheck:
+      test: [ "CMD", "mysqladmin", "ping", "-p${DB_PASSWORD}" ]
+      retries: 3
+      timeout: 5s
+volumes:
+  php-service-db-data:
