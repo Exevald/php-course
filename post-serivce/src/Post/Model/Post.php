@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Post\Domain;
+namespace App\Post\Model;
 
 use DateTime;
 
