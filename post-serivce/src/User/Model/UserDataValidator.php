@@ -1,8 +1,8 @@
 <?php
 
-namespace App\User\Domain;
+namespace App\User\Model;
 
-use App\User\Domain\ErrorType\ErrorType;
+use App\User\Model\ErrorType\ErrorType;
 use Exception;
 
 class UserDataValidator

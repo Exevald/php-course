@@ -1,6 +1,6 @@
 <?php
 /**
- * @var App\User\Domain\User $user ;
+ * @var App\User\Model\User $user ;
  */
 $birthDateFormat = 'Y-m-d';
 ?>

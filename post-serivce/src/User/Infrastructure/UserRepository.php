@@ -2,8 +2,8 @@
 
 namespace App\User\Infrastructure;
 
-use App\User\Domain\User;
-use App\User\Domain\UserRepositoryInterface;
+use App\User\Model\User;
+use App\User\Model\UserRepositoryInterface;
 use DateTime;
 use InvalidArgumentException;
 use PDO;
@@ -20,8 +20,9 @@ class UserRepository implements UserRepositoryInterface
     {
         $query = "SELECT first_name, last_name, middle_name, gender, birth_date, email, phone, avatar_path
                   FROM user
-                  WHERE user_id = $id";
-        $statement = $this->connection->query($query);
+                  WHERE user_id = :id";
+        $statement = $this->connection->prepare($query);
+        $statement->execute(['id' => $id]);
         if ($row = $statement->fetch(PDO::FETCH_ASSOC))
         {
             return $this->createUserFromRow($row);
@@ -31,7 +32,7 @@ class UserRepository implements UserRepositoryInterface
 
     public function store(User $user): int
     {
-        $dt = $user->getBirthDate();
+        $birthDate = $user->getBirthDate();
         $query = "INSERT INTO user 
                     (first_name, last_name, middle_name, gender, birth_date, email, phone, avatar_path)
                     VALUES (:firstName, :lastName, :middleName, :gender, :birthDate, :email, :phone, :avatarPath)";
@@ -41,7 +42,7 @@ class UserRepository implements UserRepositoryInterface
             ':lastName' => $user->getLastName(),
             ':middleName' => $user->getMiddleName(),
             ':gender' => $user->getGender(),
-            ':birthDate' => $dt->format(self::MYSQL_DATETIME_FORMAT),
+            ':birthDate' => $birthDate->format(self::MYSQL_DATETIME_FORMAT),
             ':email' => $user->getEmail(),
             ':phone' => $user->getPhone(),
             ':avatarPath' => $user->getAvatarPath()
@@ -51,6 +52,7 @@ class UserRepository implements UserRepositoryInterface
 
     private function createUserFromRow(array $row): User
     {
+        # вынести в константы
         return new User(
             (int)$row['user_id'],
             $row['first_name'],
@@ -66,7 +68,7 @@ class UserRepository implements UserRepositoryInterface
 
     private function parseDateTime(string $value): DateTime
     {
-        $result = DateTime::createFromFormat(self::MYSQL_DATETIME_FORMAT, '2022-03-21');
+        $result = DateTime::createFromFormat(self::MYSQL_DATETIME_FORMAT, $value);
         if (!$result)
         {
             throw new InvalidArgumentException("Invalid datetime value '$value'");

@@ -1,5 +1,5 @@
 FROM composer:2.0.8 AS composer
-FROM php:8.2.10
+FROM php:8.0.13-fpm-buster
 
 COPY --from=composer /usr/bin/composer /usr/bin/composer
 

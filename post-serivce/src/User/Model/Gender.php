@@ -1,15 +1,16 @@
 <?php
 
-namespace App\User\Domain;
+namespace App\User\Model;
 
-use App\User\Domain\ErrorType\ErrorType;
+use App\User\Model\ErrorType\ErrorType;
 use Exception;
 
 enum Gender: int
 {
     case MALE = 0;
     case FEMALE = 1;
-
+    # использовать match
+    # convertFrom
     public static function convertStringToEnumValue(string $gender): Gender
     {
         $gender = strtoupper($gender);

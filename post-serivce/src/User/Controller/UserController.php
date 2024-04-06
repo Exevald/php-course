@@ -2,9 +2,9 @@
 
 namespace App\User\Controller;
 
-use App\User\Domain\User;
-use App\User\Infrastructure\ConnectionProvider\ConnectionProvider;
+use App\Common\ConnectionProvider\ConnectionProvider;
 use App\User\Infrastructure\UserRepository;
+use App\User\Model\User;
 use DateTime;
 use InvalidArgumentException;
 
@@ -28,6 +28,7 @@ class UserController
 
     public function createUser(array $request): void
     {
+        # в константы
         $user = new User(
             null,
             $request['first_name'],

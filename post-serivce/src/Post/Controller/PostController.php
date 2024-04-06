@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Post\Infrastructure;
+namespace App\Post\Controller;
 
 class PostController
 {

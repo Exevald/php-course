@@ -1,6 +1,6 @@
 <?php
 
-namespace App\User\Domain\ErrorType;
+namespace App\User\Model\ErrorType;
 
 enum ErrorType: int
 {
