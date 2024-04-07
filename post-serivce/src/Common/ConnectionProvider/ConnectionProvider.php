@@ -23,7 +23,7 @@ class ConnectionProvider
 
     private static function getConnectionParams(): array
     {
-        $jsonConfig = file_get_contents(__DIR__ . '/db_config.json');
+        $jsonConfig = file_get_contents(__DIR__ . '/../../../config/mysql/db_config.json');
         return json_decode($jsonConfig, true);
     }
 }

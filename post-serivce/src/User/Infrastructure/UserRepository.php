@@ -10,9 +10,18 @@ use PDO;
 
 class UserRepository implements UserRepositoryInterface
 {
-    private const MYSQL_DATETIME_FORMAT = 'Y-m-d';
+    private const MYSQL_DATETIME_FORMAT = 'Y-m-d H:i:s';
+    static public string $DB_USER_ID = 'user_id';
+    static public string $DB_USER_FIRST_NAME = 'first_name';
+    static public string $DB_USER_LAST_NAME = 'last_name';
+    static public string $DB_USER_MIDDLE_NAME = 'middle_name';
+    static public string $DB_USER_GENDER = 'gender';
+    static public string $DB_USER_BIRTH_DATE = 'birth_date';
+    static public string $DB_USER_EMAIL = 'email';
+    static public string $DB_USER_PHONE = 'phone';
+    static public string $DB_USER_AVATAR_PATH = 'avatar_path';
 
-    public function __construct(private PDO $connection)
+    public function __construct(private readonly PDO $connection)
     {
     }
 
@@ -40,29 +49,28 @@ class UserRepository implements UserRepositoryInterface
         $statement->execute([
             ':firstName' => $user->getFirstName(),
             ':lastName' => $user->getLastName(),
-            ':middleName' => $user->getMiddleName(),
+            ':middleName' => $user->getMiddleName() ?? null,
             ':gender' => $user->getGender(),
             ':birthDate' => $birthDate->format(self::MYSQL_DATETIME_FORMAT),
             ':email' => $user->getEmail(),
-            ':phone' => $user->getPhone(),
-            ':avatarPath' => $user->getAvatarPath()
+            ':phone' => $user->getPhone() ?? null,
+            ':avatarPath' => $user->getAvatarPath() ?? null
         ]);
         return (int)$this->connection->lastInsertId();
     }
 
     private function createUserFromRow(array $row): User
     {
-        # вынести в константы
         return new User(
-            (int)$row['user_id'],
-            $row['first_name'],
-            $row['last_name'],
-            $row['middle_name'],
-            $row['gender'],
-            $this->parseDateTime($row['birth_date']),
-            $row['email'],
-            $row['phone'],
-            $row['avatar_path'],
+            (int)$row[self::$DB_USER_ID],
+            $row[self::$DB_USER_FIRST_NAME],
+            $row[self::$DB_USER_LAST_NAME],
+            $row[self::$DB_USER_MIDDLE_NAME],
+            $row[self::$DB_USER_GENDER],
+            $this->parseDateTime($row[self::$DB_USER_BIRTH_DATE]),
+            $row[self::$DB_USER_EMAIL],
+            $row[self::$DB_USER_PHONE],
+            $row[self::$DB_USER_AVATAR_PATH],
         );
     }
 

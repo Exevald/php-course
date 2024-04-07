@@ -7,12 +7,15 @@ use App\User\Infrastructure\UserRepository;
 use App\User\Model\User;
 use DateTime;
 use InvalidArgumentException;
+use RuntimeException;
+use Throwable;
 
 class UserController
 {
     private UserRepository $userRepository;
     private const MYSQL_DATETIME_FORMAT = 'Y-m-d';
     private const HTTP_STATUS_303_SEE_OTHER = 303;
+    private const SHOW_USER_REDIRECT_PATH = '/actions/show_user.php?user_id=';
 
 
     public function __construct()
@@ -28,20 +31,26 @@ class UserController
 
     public function createUser(array $request): void
     {
-        # в константы
-        $user = new User(
-            null,
-            $request['first_name'],
-            $request['last_name'],
-            $request['middle_name'],
-            $request['gender'],
-            $this->parseDateTime($request['birth_date']),
-            $request['email'],
-            $request['phone'],
-            $request['avatar_path']
-        );
-        $userId = $this->userRepository->store($user);
-        $this->writeRedirectSeeOther('/actions/show_user.php?user_id=' . $userId);
+        try
+        {
+            $user = new User(
+                null,
+                $request[UserRepository::$DB_USER_FIRST_NAME],
+                $request[UserRepository::$DB_USER_LAST_NAME],
+                $request[UserRepository::$DB_USER_MIDDLE_NAME],
+                $request[UserRepository::$DB_USER_GENDER],
+                $this->parseDateTime($request[UserRepository::$DB_USER_BIRTH_DATE]),
+                $request[UserRepository::$DB_USER_EMAIL],
+                $request[UserRepository::$DB_USER_PHONE],
+                $request[UserRepository::$DB_USER_AVATAR_PATH]
+            );
+            $userId = $this->userRepository->store($user);
+            $this->writeRedirectSeeOther(self::SHOW_USER_REDIRECT_PATH . $userId);
+        }
+        catch (Throwable $exception)
+        {
+            throw new RuntimeException($exception->getMessage());
+        }
     }
 
     public function showUser(array $request): void
